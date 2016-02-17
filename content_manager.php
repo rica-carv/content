@@ -74,12 +74,6 @@ if(isset($_POST['delete']))
 //these have to be set for the tinymce wysiwyg
 $e_wysiwyg	= "content_text";
 
-//include js
-function headerjs()
-{
-	echo "<script type='text/javascript' src='".e_FILE."popup.js'></script>\n";
-  
-}
 // ##### DB ---------------------------------------------------------------------------------------
 
 

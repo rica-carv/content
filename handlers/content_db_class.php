@@ -273,10 +273,8 @@ class contentdb
 			else
 			{
 				if(isset($_POST['startdate']) && $_POST['startdate'] != "0" && $_POST['startdate'] != "")
-				{
-					$newstarttime = str_replace($zam, "*", $_POST['startdate']);
-					$newstarttime = explode("*", $newstarttime);
-					$newstarttime = mktime($newstarttime[3], $newstarttime[4], 0, $newstarttime[1], $newstarttime[2], $newstarttime[0]);
+				{ 
+					$newstarttime = e107::getDate()->toTime($_POST['startdate'],'inputdatetime');
 				}
 				else
 				{
@@ -301,9 +299,7 @@ class contentdb
 
 			if(isset($_POST['enddate']) && $_POST['enddate'] != "0" && $_POST['enddate'] != "")
 			{
-					$endtime = str_replace($zam, "*", $_POST['enddate']);
-					$endtime = explode("*", $endtime);
-					$endtime = mktime($endtime[3], $endtime[4], 0, $endtime[1], $endtime[2], $endtime[0]);
+				$endtime = e107::getDate()->toTime($_POST['enddate'],'inputdatetime');
 			}
 			else
 			{

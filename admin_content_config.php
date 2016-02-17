@@ -26,10 +26,7 @@ $plugindir = e_PLUGIN."content/";
 include_lan($plugindir.'languages/'.e_LANGUAGE.'/lan_content_admin.php');
 
 include_lan($plugindir.'languages/'.e_LANGUAGE.'/lan_content.php');
-/*
-require_once(e_HANDLER."calendar/calendar_class.php");
-$cal = new DHTML_Calendar(true);
-*/ 
+
 if(e_QUERY){
 	$qs = explode(".", e_QUERY);
 }
@@ -569,12 +566,5 @@ function admin_content_config_adminmenu()
 // ##### End --------------------------------------------------------------------------------------
 
 require_once(e_ADMIN."footer.php");
-
-function headerjs()
-{
-/*	global $cal;
-	return $cal->load_files(); */
-}
-
 
 ?>

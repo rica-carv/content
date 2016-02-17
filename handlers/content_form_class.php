@@ -237,7 +237,7 @@ class contentform
 	{
 		global $qs, $sql, $ns, $rs, $aa, $fl, $tp, $plugintable, $plugindir, $pref, $eArrayStorage;
 		global $message, $stylespacer, $TOPIC_ROW_SPACER, $TOPIC_ROW, $TOPIC_ROW_NOEXPAND;
-		global $cal;
+		$frm = e107::getForm();
 
 		$months = array(CONTENT_ADMIN_DATE_LAN_0, CONTENT_ADMIN_DATE_LAN_1, CONTENT_ADMIN_DATE_LAN_2, CONTENT_ADMIN_DATE_LAN_3, CONTENT_ADMIN_DATE_LAN_4, CONTENT_ADMIN_DATE_LAN_5, CONTENT_ADMIN_DATE_LAN_6, CONTENT_ADMIN_DATE_LAN_7, CONTENT_ADMIN_DATE_LAN_8, CONTENT_ADMIN_DATE_LAN_9, CONTENT_ADMIN_DATE_LAN_10, CONTENT_ADMIN_DATE_LAN_11);
 
@@ -524,6 +524,8 @@ class contentform
 				$row['content_summary']		= $tp -> toForm($row['content_summary']);
 				$row['content_text']		= $tp -> toForm($row['content_text']);
 				$row['content_meta']		= $tp -> toForm($row['content_meta']);
+				$row['content_startdate']		= $tp -> toForm($row['content_datestamp']);
+				$row['content_startend']		= $tp -> toForm($row['content_startend']);
 				$authordetails				= $aa -> getAuthor($row['content_author']);
 			}
 		}
@@ -548,15 +550,17 @@ class contentform
 			$startdate = $_POST['startdate'];
 			$enddate = $_POST['enddate'];
 
-			$row['content_comment']				= $_POST['content_comment'];
+			$row['content_comment']			= $_POST['content_comment'];
 			$row['content_rate']				= $_POST['content_rate'];
 			$row['content_pe']					= $_POST['content_pe'];
 			$row['content_class']				= $_POST['content_class'];
 			$row['content_refer']				= $_POST['content_refer'];
-			$row['content_datestamp']			= $_POST['content_datestamp'];
+			$row['content_datestamp']		= $_POST['content_datestamp'];
+			$row['content_startdate']		= $_POST['startdate'];      
+			$row['content_enddate']			= $_POST['enddate'];     
 			$row['content_score']				= $_POST['content_score'];
 			$row['content_meta']				= $_POST['content_meta'];
-			$row['content_layout']				= $_POST['content_layout'];
+			$row['content_layout']			= $_POST['content_layout'];
 			$row['content_icon']				= $_POST['content_icon'];
 
 			//images and attachments
@@ -693,18 +697,19 @@ class contentform
 			$TOPIC_TOPIC = CONTENT_ADMIN_DATE_LAN_15;
 			$TOPIC_HEADING = CONTENT_ADMIN_ITEM_LAN_73;
 			$TOPIC_HELP = CONTENT_ADMIN_DATE_LAN_17;
-			unset($cal_options);
-			unset($cal_attrib);
-			$cal_options['firstDay'] = 1; // pierwszy dzien tygodnia -> first day of the week 
-			$cal_options['showsTime'] = varset($content_pref['content_allow_display_times'], false); //pokazac czas -> show time
-			$cal_options['showOthers'] = false;
-			$cal_options['weekNumbers'] = true;
-			$cal_options['ifFormat'] = "%Y-%m-%d %H:%M";//opcje strftime() -> option strftime()
-			$cal_attrib['class'] = "tbox";
-			$cal_attrib['name'] = 'startdate';
-			$cal_attrib['value'] = $startdate;
-			$cal_attrib['size'] = 25;
-		//	$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
+			//unset($cal_options);
+			//unset($cal_attrib);
+			//$cal_options['firstDay'] = 1; // pierwszy dzien tygodnia -> first day of the week 
+			//$cal_options['showsTime'] = varset($content_pref['content_allow_display_times'], false); //pokazac czas -> show time
+			//$cal_options['showOthers'] = false;
+			//$cal_options['weekNumbers'] = true;
+			//$cal_options['ifFormat'] = "%Y-%m-%d %H:%M";//opcje strftime() -> option strftime()
+			//$cal_attrib['class'] = "tbox";
+			//$cal_attrib['name'] = 'startdate';
+			//$cal_attrib['value'] = $startdate;
+			//$cal_attrib['size'] = 25;
+			//	$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
+			$TOPIC_FIELD = $frm->datepicker("startdate",$row['content_startdate'],"type=datetime&size=xx-large");
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 		}
 		else
@@ -728,18 +733,19 @@ class contentform
 			$TOPIC_TOPIC = CONTENT_ADMIN_DATE_LAN_16;
 			$TOPIC_HEADING = CONTENT_ADMIN_ITEM_LAN_74;
 			$TOPIC_HELP = CONTENT_ADMIN_DATE_LAN_18;
-			unset($cal_options);
-			unset($cal_attrib);
-			$cal_options['firstDay'] = 1; //pierwszy dzien tygodnia
-			$cal_options['showsTime'] = varset($content_pref['content_allow_display_times'], false); //pokazac czas
-			$cal_options['showOthers'] = false;
-			$cal_options['weekNumbers'] = true;
-			$cal_options['ifFormat'] = "%Y-%m-%d %H:%M"; //strftime
-			$cal_attrib['class'] = "tbox";
-			$cal_attrib['name'] = 'enddate';
-			$cal_attrib['value'] = $enddate;
-			$cal_attrib['size'] = 25;
-		//	$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
+			//unset($cal_options);
+			//unset($cal_attrib);
+			//$cal_options['firstDay'] = 1; //pierwszy dzien tygodnia
+			//$cal_options['showsTime'] = varset($content_pref['content_allow_display_times'], false); //pokazac czas
+			//$cal_options['showOthers'] = false;
+			//$cal_options['weekNumbers'] = true;
+			//$cal_options['ifFormat'] = "%Y-%m-%d %H:%M"; //strftime
+			//$cal_attrib['class'] = "tbox";
+			//$cal_attrib['name'] = 'enddate';
+			//$cal_attrib['value'] = $enddate;
+			//$cal_attrib['size'] = 25;
+			//	$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
+			$TOPIC_FIELD = $frm->datepicker("enddate",$row['content_enddate'],"type=datetime&size=xx-large");
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 		}
 		else
