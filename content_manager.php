@@ -35,9 +35,6 @@ $eArrayStorage = new ArrayData();
 require_once(e_HANDLER."file_class.php");
 $fl = new e_file;
 
-require_once(e_HANDLER."calendar/calendar_class.php");
-$cal = new DHTML_Calendar(true);
-
 require_once($plugindir."handlers/content_class.php");
 $aa = new content;
 require_once($plugindir."handlers/content_db_class.php");
@@ -81,8 +78,7 @@ $e_wysiwyg	= "content_text";
 function headerjs()
 {
 	echo "<script type='text/javascript' src='".e_FILE."popup.js'></script>\n";
-	global $cal;
-	return $cal->load_files();
+  
 }
 // ##### DB ---------------------------------------------------------------------------------------
 
