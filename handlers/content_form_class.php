@@ -704,7 +704,7 @@ class contentform
 			$cal_attrib['name'] = 'startdate';
 			$cal_attrib['value'] = $startdate;
 			$cal_attrib['size'] = 25;
-			$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
+		//	$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 		}
 		else
@@ -739,7 +739,7 @@ class contentform
 			$cal_attrib['name'] = 'enddate';
 			$cal_attrib['value'] = $enddate;
 			$cal_attrib['size'] = 25;
-			$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
+		//	$TOPIC_FIELD = $cal->make_input_field($cal_options, $cal_attrib);
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 		}
 		else
