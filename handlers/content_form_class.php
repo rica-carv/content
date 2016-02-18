@@ -235,7 +235,7 @@ class contentform
 
 	function show_create_content($mode, $userid="", $username="")
 	{
-		global $qs, $sql, $ns, $rs, $aa, $fl, $tp, $plugintable, $plugindir, $pref, $eArrayStorage;
+		global $qs, $sql, $ns, $rs, $aa, $fl, $tp, $plugintable, $plugindir, $pref; 
 		global $message, $stylespacer, $TOPIC_ROW_SPACER, $TOPIC_ROW, $TOPIC_ROW_NOEXPAND;
 		$frm = e107::getForm();
 
@@ -364,7 +364,7 @@ class contentform
 					$p = $qs[2];
 				}
 
-				$pcm_pref = $eArrayStorage->ReadArray($pcmcheckpref);
+				$pcm_pref = e107::unserialize($pcmcheckpref);
 
 				//user is allowed to work here
 				if( (isset($pcm_pref["content_manager_personal"]) && check_class($pcm_pref["content_manager_personal"])) || (isset($pcm_pref["content_manager_category"]) && check_class($pcm_pref["content_manager_category"])) )
@@ -1033,7 +1033,7 @@ class contentform
 
 		if(!(isset($_POST['preview_content']) || isset($message))){
 			if(isset($row['content_pref']) && $row['content_pref']){
-				$custom = $eArrayStorage->ReadArray($row['content_pref']);
+				$custom = e107::unserialize($row['content_pref']);
 			}
 		}
 
@@ -1203,7 +1203,7 @@ class contentform
 
 
 		function show_manage_content($mode, $userid="", $username=""){
-			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $eArrayStorage;
+			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp;
 
 			if($mode != "contentmanager"){
 				//category parent
@@ -1234,7 +1234,7 @@ class contentform
 				$personalmanagercheck = FALSE;
 				if($sql -> db_Select($plugintable, "content_id, content_heading, content_pref", " content_id='".intval($qs[1])."' ")){
 					$rowpcm = $sql -> db_Fetch();
-					$curpref = $eArrayStorage->ReadArray($rowpcm['content_pref']);
+					$curpref = e107::unserialize($rowpcm['content_pref']);
 
 					//only show personal items
 					if( isset($curpref["content_manager_personal"]) && check_class($curpref["content_manager_personal"]) ){
@@ -1457,7 +1457,7 @@ class contentform
 
 
 		function manage_cat(){
-			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer, $eArrayStorage;
+			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer;
 
 			$catarray	= $aa -> getCategoryTree("", "", FALSE);
 			$array		= array_keys($catarray);
@@ -1534,7 +1534,7 @@ class contentform
 		}
 
 		function manager(){
-			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer, $eArrayStorage;
+			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer;
 
 			$catarray	= $aa -> getCategoryTree("", "", FALSE);
 			$array		= array_keys($catarray);
@@ -1559,7 +1559,7 @@ class contentform
 					}else{
 						$row = $sql -> db_Fetch();
 
-						$content_pref					= $eArrayStorage->ReadArray($row['content_pref']);
+						$content_pref					= $e107::unserialize($row['content_pref']);
 						$content_cat_icon_path_large	= $tp -> replaceConstants($content_pref["content_cat_icon_path_large"]);
 						$content_cat_icon_path_small	= $tp -> replaceConstants($content_pref["content_cat_icon_path_small"]);
 						$delete_heading	= htmlentities($row['content_heading']);
@@ -1581,7 +1581,7 @@ class contentform
 						$options = "<a href='".e_SELF."?manager.".intval($catid)."'>".CONTENT_ICON_CONTENTMANAGER_SMALL."</a>";
 						/*
 						if(isset($row['content_pref'])){
-							$pcmcontent_pref = $eArrayStorage->ReadArray($row['content_pref']);
+							$pcmcontent_pref = e107::unserialize($row['content_pref']);
 						}
 						if(isset($pcmcontent_pref["content_manager_allowed_{$catid}"])){
 							$pcm		= explode(",", $pcmcontent_pref["content_manager_allowed_{$catid}"]);
@@ -1619,7 +1619,7 @@ class contentform
 
 
 		function manager_category(){
-			global $plugintable, $qs, $sql, $ns, $rs, $aa, $eArrayStorage;
+			global $plugintable, $qs, $sql, $ns, $rs, $aa;
 
 			if(!getperms("0")){ js_location(e_SELF); }
 			if(!is_numeric($qs[1])){ js_location(e_SELF); }
@@ -1631,7 +1631,7 @@ class contentform
 				$row = $sql -> db_Fetch();
 				$caption = CONTENT_ADMIN_CAT_LAN_30." : ".$row['content_heading'];
 			}
-			$content_pref	= $eArrayStorage->ReadArray($row['content_pref']);
+			$content_pref	= e107::unserialize($row['content_pref']);
 			$qs[1] = intval($qs[1]);
 
 			$text = "
@@ -2028,7 +2028,7 @@ class contentform
 
 	function show_contentmanager($mode, $userid="", $username="")
 	{
-		global $content_shortcodes, $row, $tp, $sql, $ns, $rs, $plugintable, $plugindir, $aa, $eArrayStorage;
+		global $content_shortcodes, $row, $tp, $sql, $ns, $rs, $plugintable, $plugindir, $aa;
 		global $CONTENT_CONTENTMANAGER_CATEGORY, $CONTENT_CONTENTMANAGER_TABLE, $CONTENT_CONTENTMANAGER_TABLE_START, $CONTENT_CONTENTMANAGER_TABLE_END, $content_pref, $pref;
 		$personalmanagercheck = FALSE;
 
@@ -2051,7 +2051,7 @@ class contentform
 			if($sql -> db_Select($plugintable, "content_id, content_heading, content_pref", " content_id='".intval($catid)."' "))
 			{
 				$row = $sql -> db_Fetch(MYSQL_ASSOC);
-				$content_pref = $eArrayStorage->ReadArray($row['content_pref']);
+				$content_pref = e107::unserialize($row['content_pref']);
 				if( (isset($content_pref["content_manager_approve"]) && ($content_pref["content_manager_approve"] != e_UC_PUBLIC) && check_class($content_pref["content_manager_approve"]))
 				|| (isset($content_pref["content_manager_personal"]) && ($content_pref["content_manager_personal"] != e_UC_PUBLIC) && check_class($content_pref["content_manager_personal"]))
 				|| (isset($content_pref["content_manager_category"]) && ($content_pref["content_manager_category"] != e_UC_PUBLIC) && check_class($content_pref["content_manager_category"])) )
