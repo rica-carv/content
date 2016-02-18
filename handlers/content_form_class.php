@@ -1679,7 +1679,7 @@ class contentform
 			global $qs, $plugintable, $plugindir, $sql, $ns, $rs, $aa, $fl, $pref, $tp;
 			global $message, $content_parent, $content_heading, $content_subheading, $content_text, $content_icon, $content_comment, $content_rate, $content_pe, $content_class;
 			global $stylespacer, $TOPIC_ROW_SPACER, $TOPIC_ROW, $TOPIC_ROW_NOEXPAND;
-
+			$frm = e107::getForm();
 			$months = array(CONTENT_ADMIN_DATE_LAN_0, CONTENT_ADMIN_DATE_LAN_1, CONTENT_ADMIN_DATE_LAN_2, CONTENT_ADMIN_DATE_LAN_3, CONTENT_ADMIN_DATE_LAN_4, CONTENT_ADMIN_DATE_LAN_5, CONTENT_ADMIN_DATE_LAN_6, CONTENT_ADMIN_DATE_LAN_7, CONTENT_ADMIN_DATE_LAN_8, CONTENT_ADMIN_DATE_LAN_9, CONTENT_ADMIN_DATE_LAN_10, CONTENT_ADMIN_DATE_LAN_11);
 
 			if(!is_object($sql)){ $sql = new db; }
@@ -1704,7 +1704,7 @@ class contentform
 					if(substr($row['content_parent'],0,1) != "0"){
 						header("location:".e_SELF."?cat"); exit;
 					}
-					$menuheading = $row['content_heading'];
+					$menuheading = $row['content_heading']; 
 				}
 				$formurl = e_SELF."?".e_QUERY;
 			}
@@ -1730,10 +1730,10 @@ class contentform
 				<tr><td class='forumheader3'>".$cat_text."</td></tr>
 				<tr><td colspan='2'>&nbsp;</td></tr>
 				<tr><td class='forumheader3'>".CONTENT_ADMIN_DATE_LAN_15."</td><td class='forumheader3'>
-					".($_POST['ne_day'] != "none" ? $_POST['ne_day'] : "")." ".$months[($_POST['ne_month']-1)]." ".($_POST['ne_year'] != "none" ? $_POST['ne_year'] : "")."
+					". $_POST['cat_startdate']."
 				</td></tr>
 				<tr><td class='forumheader3'>".CONTENT_ADMIN_DATE_LAN_16."</td><td class='forumheader3'>
-					".($_POST['end_day'] != "none" ? $_POST['end_day'] : "")." ".$months[($_POST['end_month']-1)]." ".($_POST['end_year'] != "none" ? $_POST['end_year'] : "")."
+					". $_POST['cat_enddate']."
 				</td></tr>
 				<tr><td class='forumheader3'>".CONTENT_ADMIN_CAT_LAN_17."</td><td class='forumheader3'>".r_userclass_name($_POST['cat_class'])."</td></tr>
 				<tr><td class='forumheader3'>".CONTENT_ADMIN_CAT_LAN_14."</td><td class='forumheader3'>".($_POST['cat_comment'] == "1" ? CONTENT_ADMIN_ITEM_LAN_85 : CONTENT_ADMIN_ITEM_LAN_86)."</td></tr>
@@ -1753,18 +1753,15 @@ class contentform
 					$_POST['cat_text']		= $tp->toHTML($_POST['cat_text'],$parseBB = TRUE); // parse the bbcodes to we can edit as html.
 					$_POST['cat_text']		= $tp->replaceConstants($_POST['cat_text'],TRUE); // eg. replace {e_IMAGE} with e107_images/ and NOT ../e107_images
 				}
-				$row['content_text']		= $tp -> post_toForm($_POST['cat_text']);
-				$ne_day						= $_POST['ne_day'];
-				$ne_month					= $_POST['ne_month'];
-				$ne_year					= $_POST['ne_year'];
-				$end_day					= $_POST['end_day'];
-				$end_month					= $_POST['end_month'];
-				$end_year					= $_POST['end_year'];
-				$row['content_icon']		= $_POST['cat_icon'];
-				$row['content_comment']		= $_POST['cat_comment'];
-				$row['content_rate']		= $_POST['cat_rate'];
-				$row['content_pe']			= $_POST['cat_pe'];
-				$row['content_class']		= $_POST['cat_class'];
+				$row['content_text']				= $tp -> post_toForm($_POST['cat_text']);
+				$row['content_datestamp']		= $_POST['content_datestamp'];
+				$row['content_startdate']		= $_POST['cat_startdate'];      
+				$row['content_enddate']			= $_POST['cat_enddate'];
+				$row['content_icon']				= $_POST['cat_icon'];
+				$row['content_comment']			= $_POST['cat_comment'];
+				$row['content_rate']				= $_POST['cat_rate'];
+				$row['content_pe']					= $_POST['cat_pe'];
+				$row['content_class']				= $_POST['cat_class'];
 			}else{
 				if(e_WYSIWYG){
 					$row['content_text']	= $tp->replaceConstants($row['content_text'],TRUE); // eg. replace {e_IMAGE} with e107_images/ and NOT ../e107_images
@@ -1833,24 +1830,14 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			if(isset($row['content_datestamp']) && $row['content_datestamp'] != "0"){
-				$startdate = getdate($row['content_datestamp']);
-				$ne_day = $startdate['mday'];
-				$ne_month = $startdate['mon'];
-				$ne_year = $startdate['year'];
+				$cat_startdate = strftime("%Y-%m-%d %H:%M", $row['content_datestamp']);
 			}else{
-				$ne_day = (isset($ne_day) ? $ne_day : "");
-				$ne_month = (isset($ne_month) ? $ne_month : "");
-				$ne_year = (isset($ne_year) ? $ne_year : "");
+ 				 $cat_startdate = (isset($cat_startdate) ? $cat_startdate : "");
 			}
 			if(isset($row['content_enddate']) && $row['content_enddate'] != "0"){
-				$enddate = getdate($row['content_enddate']);
-				$end_day = $enddate['mday'];
-				$end_month = $enddate['mon'];
-				$end_year = $enddate['year'];
+				$cat_enddate = strftime("%Y-%m-%d %H:%M", $row['content_enddate']);
 			}else{
-				$end_day = (isset($end_day) ? $end_day : "");
-				$end_month = (isset($end_month) ? $end_month : "");
-				$end_year = (isset($end_year) ? $end_year : "");
+				$cat_enddate = (isset($cat_enddate) ? $cat_enddate : "");
 			}
 
 			$smarray = getdate();
@@ -1862,60 +1849,20 @@ class contentform
 				$TOPIC_TOPIC = CONTENT_ADMIN_DATE_LAN_15;
 				$TOPIC_HEADING = CONTENT_ADMIN_ITEM_LAN_73;
 				$TOPIC_HELP = CONTENT_ADMIN_DATE_LAN_17;
-				$TOPIC_FIELD = "
-					".$rs -> form_select_open("ne_day")."
-					".$rs -> form_option(CONTENT_ADMIN_DATE_LAN_12, 0, "none");
-					for($count=1; $count<=31; $count++){
-						$TOPIC_FIELD .= $rs -> form_option($count, ($ne_day == $count ? "1" : "0"), $count);
-					}
-					$TOPIC_FIELD .= $rs -> form_select_close()."
-					".$rs -> form_select_open("ne_month")."
-					".$rs -> form_option(CONTENT_ADMIN_DATE_LAN_13, 0, "none");
-					for($count=1; $count<=12; $count++){
-						$TOPIC_FIELD .= $rs -> form_option($months[($count-1)], ($ne_month == $count ? "1" : "0"), $count);
-					}
-					$TOPIC_FIELD .= $rs -> form_select_close()."
-					".$rs -> form_select_open("ne_year")."
-					".$rs -> form_option(CONTENT_ADMIN_DATE_LAN_14, 0, "none");
-					for($count=($current_year-5); $count<=$current_year; $count++){
-						$TOPIC_FIELD .= $rs -> form_option($count, ($ne_year == $count ? "1" : "0"), $count);
-					}
-					$TOPIC_FIELD .= $rs -> form_select_close();
+				$TOPIC_FIELD = $frm->datepicker("cat_startdate",$row['content_startdate'],"type=date&size=xx-large");
 				$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 			}else{
-				$hidden .= $rs -> form_hidden("ne_day", $ne_day);
-				$hidden .= $rs -> form_hidden("ne_month", $ne_month);
-				$hidden .= $rs -> form_hidden("ne_year", $ne_year);
+				$hidden .= $rs -> form_hidden("cat_startdate", $startdate);
 			}
 
 			if($checkenddate){
 				$TOPIC_TOPIC = CONTENT_ADMIN_DATE_LAN_16;
 				$TOPIC_HEADING = CONTENT_ADMIN_ITEM_LAN_74;
 				$TOPIC_HELP = CONTENT_ADMIN_DATE_LAN_18;
-				$TOPIC_FIELD = "
-					".$rs -> form_select_open("end_day")."
-					".$rs -> form_option(CONTENT_ADMIN_DATE_LAN_12, 1, "none");
-					for($count=1; $count<=31; $count++){
-						$TOPIC_FIELD .= $rs -> form_option($count, ($end_day == $count ? "1" : "0"), $count);
-					}
-					$TOPIC_FIELD .= $rs -> form_select_close()."
-					".$rs -> form_select_open("end_month")."
-					".$rs -> form_option(CONTENT_ADMIN_DATE_LAN_13, 1, "none");
-					for($count=1; $count<=12; $count++){
-						$TOPIC_FIELD .= $rs -> form_option($months[($count-1)], ($end_month == $count ? "1" : "0"), $count);
-					}
-					$TOPIC_FIELD .= $rs -> form_select_close()."
-					".$rs -> form_select_open("end_year")."
-					".$rs -> form_option(CONTENT_ADMIN_DATE_LAN_14, 1, "none");
-					for($count=($current_year-5); $count<=$current_year; $count++){
-						$TOPIC_FIELD .= $rs -> form_option($count, ($end_year == $count ? "1" : "0"), $count);
-					}
-					$TOPIC_FIELD .= $rs -> form_select_close();
+				$TOPIC_FIELD = $frm->datepicker("cat_enddate",$row['content_enddate'],"type=date&size=xx-large");
 				$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 			}else{
-				$hidden .= $rs -> form_hidden("end_day", $end_day);
-				$hidden .= $rs -> form_hidden("end_month", $end_month);
-				$hidden .= $rs -> form_hidden("end_year", $end_year);
+				$hidden .= $rs -> form_hidden("cat_enddate", $cat_enddate);
 			}
 
 			$rejectlist = array('$.','$..','/','CVS','thumbs.db','Thumbs.db','*._$', 'index', 'null*');
@@ -2006,7 +1953,7 @@ class contentform
 				if($qs[1] == "edit" && is_numeric($qs[2]) ){
 					$text .= $rs -> form_button("submit", "preview_category", (isset($_POST['preview_category']) ? CONTENT_ADMIN_MAIN_LAN_27 : CONTENT_ADMIN_MAIN_LAN_26));
 					$text .= $rs -> form_button("submit", "update_category", CONTENT_ADMIN_CAT_LAN_7).$rs -> form_button("submit", "category_clear", CONTENT_ADMIN_CAT_LAN_21).$rs -> form_hidden("parent_id", $parent).$rs -> form_hidden("cat_id", $qs[2]).$rs -> form_hidden("id", $qs[2]).$rs -> form_hidden("menuheading", $menuheading);
-
+					$text .= $rs -> form_hidden("content_datestamp", $row['content_datestamp']);
 					$caption = CONTENT_ADMIN_CAT_LAN_1;
 				}else{
 					$text .= $rs -> form_button("submit", "preview_category", (isset($_POST['preview_category']) ? CONTENT_ADMIN_MAIN_LAN_27 : CONTENT_ADMIN_MAIN_LAN_26));

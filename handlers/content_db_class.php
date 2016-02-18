@@ -439,23 +439,38 @@ class contentdb
 				}
 			}
 			$_POST['parent'] = $parent;
-
-			if( isset($_POST['ne_day']) && $_POST['ne_day']!='' && $_POST['ne_day']!='0' && $_POST['ne_day'] != "none" 
-				&& isset($_POST['ne_month']) && $_POST['ne_month']!='' && $_POST['ne_month']!='0' && $_POST['ne_month'] != "none" 
-				&& isset($_POST['ne_year']) && $_POST['ne_year']!='' && $_POST['ne_year']!='0' && $_POST['ne_year'] != "none" ){
-				$starttime = mktime( 0, 0, 0, intval($_POST['ne_month']), intval($_POST['ne_day']), intval($_POST['ne_year']));
-			}else{
-				$starttime = time();
+			if(isset($_POST['cat_startdate']) && $_POST['cat_startdate'] != "0" && $_POST['cat_startdate'] != "")
+				{ 
+					$newstarttime = e107::getDate()->toTime($_POST['cat_startdate'],'inputdatetime');
+				}
+				else
+				{
+					$newstarttime = time();
+				}
+			if(isset($_POST['content_datestamp']) && $_POST['content_datestamp'] != "" && $_POST['content_datestamp'] != "0")
+				{
+					if($newstarttime != $starttime)
+					{
+						$starttime = $newstarttime;   
+					}
+					else
+					{
+						$starttime = intval($_POST['content_datestamp']);
+					}
+				}
+			else
+			{
+					$starttime = time();
 			}
-
-			if( isset($_POST['end_day']) && $_POST['end_day']!='' && $_POST['end_day']!='0' && $_POST['end_day'] != "none" 
-				&& isset($_POST['end_month']) && $_POST['end_month']!='' && $_POST['end_month']!='0' && $_POST['end_month'] != "none" 
-				&& isset($_POST['end_year']) && $_POST['end_year']!='' && $_POST['end_year']!='0' && $_POST['end_year'] != "none" ){
-				$endtime = mktime( 0, 0, 0, intval($_POST['end_month']), intval($_POST['end_day']), intval($_POST['end_year']));
-			}else{
+			if(isset($_POST['cat_enddate']) && $_POST['cat_enddate'] != "0" && $_POST['cat_enddate'] != "")
+			{
+					$endtime = e107::getDate()->toTime($_POST['cat_enddate'],'inputdatetime');
+			}
+			else
+			{
 				$endtime = "0";
 			}
-
+			
 			if($mode == "create"){
 				$sql -> db_Insert($plugintable, "'0', '".$_POST['cat_heading']."', '".$_POST['cat_subheading']."', '', '".$_POST['cat_text']."', '".ADMINID."', '".$tp->toDB($_POST["cat_icon"])."', '', '', '".$_POST['parent']."', '".intval($_POST['cat_comment'])."', '".intval($_POST['cat_rate'])."', '".intval($_POST['cat_pe'])."', '', '".$starttime."', '".$endtime."', '".$_POST['cat_class']."', '', '0', '0', '', '' ");
 
