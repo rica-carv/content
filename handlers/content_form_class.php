@@ -245,7 +245,7 @@ class contentform
 		if( $qs[1] == "create" && !isset($qs[2]) )
 		{
 			$text = "
-			<div style='text-left'>
+			<div class='text-left'>
 			".$rs -> form_open("post", e_SELF."?".e_QUERY."", "dataform", "", "enctype='multipart/form-data'")."
 			<table class='table adminform' id='show_create_content_01'>
 			<tr><td class='fcaption' colspan='2'>".CONTENT_ADMIN_MAIN_LAN_2."</td></tr>";
@@ -590,7 +590,7 @@ class contentform
 
 		$formurl = e_SELF."?".e_QUERY;
 		$text = "
-		<div style='text-left'>
+		<div class='text-left'>
 		".$rs -> form_open("post", $formurl, "dataform", "", "enctype='multipart/form-data'")."
 		<table class='table adminform' id='show_create_content_02'>";
 
@@ -1377,7 +1377,7 @@ class contentform
 				$array = $aa -> getCategoryTree("", "", FALSE);
 
 				$text = "
-				<div style='text-left'>
+				<div class='text-left'>
 				".$rs -> form_open("post", e_SELF, "submittedform","","", "")."
 				<table class='table adminform' id='show_submitted_01'>
 				<tr>
@@ -1442,7 +1442,7 @@ class contentform
 				$text = "<div style='text-align:center;'>".CONTENT_ADMIN_CAT_LAN_9."</div>";
 			}else{
 				$text = "
-				<div style='text-left'>
+				<div class='text-left'>
 				".$rs -> form_open("post", e_SELF."?".$qs[0], "catform","","", "")."
 				<table class='table adminform' id='manage_cat_01'>
 				<tr>
@@ -1519,7 +1519,7 @@ class contentform
 				$text = "<div style='text-align:center;'>".CONTENT_ADMIN_CAT_LAN_9."</div>";
 			}else{
 				$text = "
-				<div style='text-left'>
+				<div class='text-left'>
 				".$rs -> form_open("post", e_SELF."?".$qs[0], "catform","","", "")."
 			  <table class='table adminform' id='manager_01'>
 				<tr>
@@ -1611,7 +1611,7 @@ class contentform
 			$qs[1] = intval($qs[1]);
 
 			$text = "
-			<div style='text-left'>
+			<div class='text-left'>
 			".$rs -> form_open("post", e_SELF."?".e_QUERY, "managerform", "", "enctype='multipart/form-data'")."
 			<table class='table adminform' id='manager_category_01'>
 			<tr>
@@ -1696,7 +1696,7 @@ class contentform
 				$cat_text = $tp->post_toHTML($_POST['cat_text'],TRUE);
 
 				$text = "
-				<div style='text-left'>
+				<div class='text-left'>
 				<table class='table adminform' id='show_create_category_01'>
 				<tr>
 					<td class='forumheader3' rowspan='3' style='width:5%; vertical-align:top;'><img src='".$content_cat_icon_path_large.$_POST['cat_icon']."' style='border:0' alt='' /></td>
@@ -1764,7 +1764,7 @@ class contentform
 			$checkvisibility = (isset($content_pref["content_admincat_visibility"]) ? $content_pref["content_admincat_visibility"] : (isset($content_pref["content_admincat_visibility"]) ? $content_pref["content_admincat_visibility"] : ""));
 
 			$text = "
-			<div style='text-left'>
+			<div class='text-left'>
 			".$rs -> form_open("post", $formurl, "dataform", "", "enctype='multipart/form-data'")."
       <table class='table adminform' id='show_create_category_02'>";
 
@@ -2011,7 +2011,7 @@ class contentform
 				$text = "<div style='text-align:center;'>".CONTENT_ADMIN_CAT_LAN_9."</div>";
 			}else{
 				$text = "
-				<div style='text-left'>
+				<div class='text-left'>
 				".$rs -> form_open("post", e_SELF."?order", "orderform")."
 				<table class='table adminform' id='show_order_02'>
 				<tr>
@@ -2163,7 +2163,7 @@ class contentform
 				$text = "<div style='text-align:center'>".CONTENT_ADMIN_ITEM_LAN_4."</div>";
 			}else{
 				$text = "
-				<div style='text-left'>
+				<div class='text-left'>
 				".$rs -> form_open("post", $formtarget, "orderform")."
 				<table class='table adminform' id='show_content_order_01'>
 				<tr><td class='fcaption' colspan='5'>".CONTENT_ADMIN_MAIN_LAN_2."</td></tr>
@@ -2259,7 +2259,7 @@ class contentform
 //			include_once(file_exists($lan_file) ? $lan_file : $plugindir."languages/English/lan_content_options.php");
 
 			$text = "
-			<div style='text-left'>
+			<div class='text-left'>
 			".$rs -> form_open("post", e_SELF."?option", "optionsform","","", "")."
 			<table class='table adminform' id='show_options_01'>
 			<tr>
