@@ -1535,7 +1535,7 @@ class contentform
 					}else{
 						$row = $sql -> db_Fetch();
 
-						$content_pref					= $e107::unserialize($row['content_pref']);
+						$content_pref					= e107::unserialize($row['content_pref']);
 						$content_cat_icon_path_large	= $tp -> replaceConstants($content_pref["content_cat_icon_path_large"]);
 						$content_cat_icon_path_small	= $tp -> replaceConstants($content_pref["content_cat_icon_path_small"]);
 						$delete_heading	= htmlentities($row['content_heading']);
