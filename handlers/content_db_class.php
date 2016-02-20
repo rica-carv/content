@@ -343,8 +343,9 @@ class contentdb
 
 				//trigger event for notify
 				$edata_cs = array("content_heading" => $_POST['content_heading'], "content_subheading" => $_POST['content_subheading'], "content_author" => $_POST['content_author_name']);
-				$e_event->trigger("content", $edata_cs);
+			//	$e_event->trigger("content", $edata_cs);  NOT WORKING FOR ADMIN
 
+        e107::getEvent()->trigger('content',$edata_cs);  
 				if(!$type || $type == "admin"){
 					//jsx_location(e_SELF."?".e_QUERY.".cc");
 					$url = e_SELF."?".e_QUERY.".cc";  
