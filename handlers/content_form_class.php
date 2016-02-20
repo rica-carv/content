@@ -931,7 +931,7 @@ class contentform
 			//userclass
 			$row['content_class'] = (isset($row['content_class']) ? $row['content_class'] : "");
 			$TOPIC_TOPIC = CONTENT_ADMIN_ITEM_LAN_39;
-			$TOPIC_FIELD = r_userclass("content_class",$row['content_class'], "CLASSES");
+			$TOPIC_FIELD = r_userclass("content_class",$row['content_class']);
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 		}else{
 			$hidden .= $rs -> form_hidden("content_class", $row['content_class']);
@@ -1597,12 +1597,17 @@ class contentform
 		function manager_category(){
 			global $plugintable, $qs, $sql, $ns, $rs, $aa;
 
-			if(!getperms("0")){ js_location(e_SELF); }
-			if(!is_numeric($qs[1])){ js_location(e_SELF); }
-
+			if(!getperms("0")){ 			//jsx_location(e_SELF); 
+				$url = e_SELF;
+				e107::getRedirect()->go($url); }
+			if(!is_numeric($qs[1])){ 			//jsx_location(e_SELF); 
+			$url = e_SELF;
+			e107::getRedirect()->go($url); }
 			if(!is_object($sql)){ $sql = new db; }
 			if(!$sql -> db_Select($plugintable, "content_id, content_heading, content_pref", "content_id='".intval($qs[1])."' ")){
-				js_location(e_SELF."?manager");
+				//js_location(e_SELF."?manager"); 
+				$url = e_SELF."?manager";
+				e107::getRedirect()->go($url);
 			}else{
 				$row = $sql -> db_Fetch();
 				$caption = CONTENT_ADMIN_CAT_LAN_30." : ".$row['content_heading'];
@@ -1914,7 +1919,7 @@ class contentform
 			if($checkvisibility){
 				$row['content_class'] = (isset($row['content_class']) ? $row['content_class'] : "");
 				$TOPIC_TOPIC = CONTENT_ADMIN_CAT_LAN_17;
-				$TOPIC_FIELD = r_userclass("cat_class",$row['content_class'], "CLASSES");
+				$TOPIC_FIELD = r_userclass("cat_class",$row['content_class']);
 				$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 			}else{
 				$hidden .= $rs -> form_hidden("cat_class", $row['content_class']);
@@ -2558,7 +2563,7 @@ class contentform
 
 			//content_submit_class_
 			$TOPIC_TOPIC = CONTENT_ADMIN_OPT_LAN_10;
-			$TOPIC_FIELD = r_userclass("content_submit_class", $content_pref['content_submit_class'], "CLASSES");
+			$TOPIC_FIELD = r_userclass("content_submit_class", $content_pref['content_submit_class']);
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			//content_submit_directpost_

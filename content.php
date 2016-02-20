@@ -154,8 +154,10 @@ if(!e_QUERY){
 	}elseif( $qs[0] == "list" && is_numeric($qs[1]) && intval($qs[1])>0  ){
 		show_content_archive();
 	}else{
-		//js_location(e_SELF);
-		header("location:".e_SELF);
+		//jsx_location(e_SELF);
+		//header("location:".e_SELF);
+		$url = e_SELF;
+		e107::getRedirect()->go($url);
 	}
 }
 // ##### ------------------------------------------------------------------------------
@@ -551,7 +553,11 @@ function show_content_recent(){
 
 		$contenttotal = $sql2 -> db_Count($plugintable, "(*)", "WHERE content_refer != 'sa' AND ".$qry." ".$datequery." AND content_class REGEXP '".e_CLASS_REGEXP."' " );
 
-		if($from > $contenttotal-1){ js_location(e_SELF); }
+		if($from > $contenttotal-1){ 
+			//jsx_location(e_SELF); 
+			$url = e_SELF;
+			e107::getRedirect()->go($url);
+		}
 		
 		$recentqry			= "content_refer !='sa' AND ".$qry." ".$datequery." AND content_class REGEXP '".e_CLASS_REGEXP."' ".$order." ".$nextprevquery;
 		$text				= displayPreview($recentqry);

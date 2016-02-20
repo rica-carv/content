@@ -329,7 +329,7 @@ class contentdb
 			//content_refer : only added in sql if posting submitted item
 			//$refer = (isset($_POST['content_refer']) && $_POST['content_refer']=='sa' ? ", content_refer='' " : "");
 
-			
+		
 		if($mode == "create")
 		{
 				if($type == "submit"){
@@ -346,14 +346,22 @@ class contentdb
 				$e_event->trigger("content", $edata_cs);
 
 				if(!$type || $type == "admin"){
-					js_location(e_SELF."?".e_QUERY.".cc");
+					//jsx_location(e_SELF."?".e_QUERY.".cc");
+					$url = e_SELF."?".e_QUERY.".cc";  
+					e107::getRedirect()->go($url); 
 				}elseif($type == "contentmanager"){
-					js_location(e_SELF."?c");
+					//jsx_location(e_SELF."?c");
+					$url = e_SELF."?c";  
+					e107::getRedirect()->go($url);    
 				}elseif($type == "submit"){
 					if($content_pref["content_submit_directpost"]){
-						js_location(e_SELF."?s");
+					//	jsx_location(e_SELF."?s");  
+					$url = e_SELF."?s";  
+					e107::getRedirect()->go($url);               
 					}else{
-						js_location(e_SELF."?d");
+					//	jsx_location(e_SELF."?d");
+					$url = e_SELF."?d";  
+					e107::getRedirect()->go($url);           
 					}							
 				}
 		}
@@ -387,9 +395,13 @@ class contentdb
 				$e107cache->clear("$plugintable");
 				$e107cache->clear("comment.$plugintable.{$_POST['content_id']}");
 				if(!$type || $type == "admin"){
-					js_location(e_SELF."?".e_QUERY.".cu");
+					//jsx_location(e_SELF."?".e_QUERY.".cu");
+					$url = e_SELF."?".e_QUERY.".cu";
+					e107::getRedirect()->go($url);
 				}elseif($type == "contentmanager"){
-					js_location(e_SELF."?u");
+					//jsx_location(e_SELF."?u");
+					$url = e_SELF."?u";
+					e107::getRedirect()->go($url);
 				}
 			}
 		}
@@ -481,7 +493,9 @@ class contentdb
 					$aa -> CreateParentMenu($iid);
 				}
 				$e107cache->clear("$plugintable");
-				js_location(e_SELF."?".e_QUERY.".pc");
+				//jsx_location(e_SELF."?".e_QUERY.".pc");
+				$url = e_SELF."?".e_QUERY.".pc";
+				e107::getRedirect()->go($url);
 
 			}elseif($mode == "update"){
 				$sql -> db_Update($plugintable, "content_heading = '".$_POST['cat_heading']."', content_subheading = '".$_POST['cat_subheading']."', content_summary = '', content_text = '".$_POST['cat_text']."', content_author = '".ADMINID."', content_icon = '".$tp->toDB($_POST["cat_icon"])."', content_image = '', content_parent = '".$_POST['parent']."', content_comment = '".intval($_POST['cat_comment'])."', content_rate = '".intval($_POST['cat_rate'])."', content_pe = '".intval($_POST['cat_pe'])."', content_refer = '0', content_datestamp = '".$starttime."', content_enddate = '".$endtime."', content_class = '".intval($_POST['cat_class'])."' WHERE content_id = '".intval($_POST['cat_id'])."' ");
@@ -493,7 +507,9 @@ class contentdb
 					$aa -> CreateParentMenu($_POST['cat_id']);
 				}
 				$e107cache->clear("$plugintable");
-				js_location(e_SELF."?".e_QUERY.".pu");
+				//jsx_location(e_SELF."?".e_QUERY.".pu");
+				$url = e_SELF."?".e_QUERY.".pu";
+				e107::getRedirect()->go($url);
 			}
 		}
 
