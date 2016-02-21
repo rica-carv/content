@@ -235,7 +235,7 @@ class contentform
 
 	function show_create_content($mode, $userid="", $username="")
 	{
-		global $qs, $sql, $ns, $rs, $aa, $fl, $tp, $plugintable, $plugindir, $pref; 
+		global $qs, $sql, $ns, $rs, $aa, $fl, $tp, $plugintable, $plugindir, $pref, $eArrayStorage; 
 		global $message, $stylespacer, $TOPIC_ROW_SPACER, $TOPIC_ROW, $TOPIC_ROW_NOEXPAND;
 		$frm = e107::getForm();
 
@@ -364,7 +364,8 @@ class contentform
 					$p = $qs[2];
 				}
 
-				$pcm_pref = e107::unserialize($pcmcheckpref);
+				//$pcm_pref = e107::unserialize($pcmcheckpref);
+        $pcm_pref = $eArrayStorage->ReadArray($pcmcheckpref);
 
 				//user is allowed to work here
 				if( (isset($pcm_pref["content_manager_personal"]) && check_class($pcm_pref["content_manager_personal"])) || (isset($pcm_pref["content_manager_category"]) && check_class($pcm_pref["content_manager_category"])) )
@@ -1008,7 +1009,8 @@ class contentform
 
 		if(!(isset($_POST['preview_content']) || isset($message))){
 			if(isset($row['content_pref']) && $row['content_pref']){
-				$custom = e107::unserialize($row['content_pref']);
+				//$custom = e107::unserialize($row['content_pref']);
+        $custom = $eArrayStorage->ReadArray($row['content_pref']);
 			}
 		}
 
@@ -1178,7 +1180,7 @@ class contentform
 
 
 		function show_manage_content($mode, $userid="", $username=""){
-			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp;
+			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $eArrayStorage;
 			$frm = e107::getForm();
 			if($mode != "contentmanager"){
 				//category parent
@@ -1210,8 +1212,8 @@ class contentform
 				$personalmanagercheck = FALSE;
 				if($sql -> db_Select($plugintable, "content_id, content_heading, content_pref", " content_id='".intval($qs[1])."' ")){
 					$rowpcm = $sql -> db_Fetch();
-					$curpref = e107::unserialize($rowpcm['content_pref']);
-
+					//$curpref = e107::unserialize($rowpcm['content_pref']);
+          $curpref = $eArrayStorage->ReadArray($rowpcm['content_pref']);
 					//only show personal items
 					if( isset($curpref["content_manager_personal"]) && check_class($curpref["content_manager_personal"]) ){
 						$l = strlen($userid)+1;
@@ -1433,7 +1435,7 @@ class contentform
 
 
 		function manage_cat(){
-			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer;
+			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer, $eArrayStorage;
 
 			$catarray	= $aa -> getCategoryTree("", "", FALSE);
 			$array		= array_keys($catarray);
@@ -1510,7 +1512,7 @@ class contentform
 		}
 
 		function manager(){
-			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer;
+			global $qs, $sql, $ns, $rs, $aa, $plugintable, $plugindir, $tp, $stylespacer, $eArrayStorage;
 
 			$catarray	= $aa -> getCategoryTree("", "", FALSE);
 			$array		= array_keys($catarray);
@@ -1535,7 +1537,8 @@ class contentform
 					}else{
 						$row = $sql -> db_Fetch();
 
-						$content_pref					= e107::unserialize($row['content_pref']);
+						//$content_pref					= e107::unserialize($row['content_pref']);
+            $content_pref					= $eArrayStorage->ReadArray($row['content_pref']);            
 						$content_cat_icon_path_large	= $tp -> replaceConstants($content_pref["content_cat_icon_path_large"]);
 						$content_cat_icon_path_small	= $tp -> replaceConstants($content_pref["content_cat_icon_path_small"]);
 						$delete_heading	= htmlentities($row['content_heading']);
@@ -1595,7 +1598,7 @@ class contentform
 
 
 		function manager_category(){
-			global $plugintable, $qs, $sql, $ns, $rs, $aa;
+			global $plugintable, $qs, $sql, $ns, $rs, $aa, $eArrayStorage;
 
 			if(!getperms("0")){ 			//jsx_location(e_SELF); 
 				$url = e_SELF;
@@ -1612,7 +1615,8 @@ class contentform
 				$row = $sql -> db_Fetch();
 				$caption = CONTENT_ADMIN_CAT_LAN_30." : ".$row['content_heading'];
 			}
-			$content_pref	= e107::unserialize($row['content_pref']);
+			//$content_pref	= e107::unserialize($row['content_pref']);
+      $content_pref	= e107::unserialize($row['content_pref']);
 			$qs[1] = intval($qs[1]);
 
 			$text = "
@@ -1954,7 +1958,7 @@ class contentform
 
 	function show_contentmanager($mode, $userid="", $username="")
 	{
-		global $content_shortcodes, $row, $tp, $sql, $ns, $rs, $plugintable, $plugindir, $aa;
+		global $content_shortcodes, $row, $tp, $sql, $ns, $rs, $plugintable, $plugindir, $aa, $eArrayStorage;
 		global $CONTENT_CONTENTMANAGER_CATEGORY, $CONTENT_CONTENTMANAGER_TABLE, $CONTENT_CONTENTMANAGER_TABLE_START, $CONTENT_CONTENTMANAGER_TABLE_END, $content_pref, $pref;
 		$personalmanagercheck = FALSE;
 
@@ -1977,7 +1981,8 @@ class contentform
 			if($sql -> db_Select($plugintable, "content_id, content_heading, content_pref", " content_id='".intval($catid)."' "))
 			{
 				$row = $sql -> db_Fetch(MYSQL_ASSOC);
-				$content_pref = e107::unserialize($row['content_pref']);
+				//$content_pref = e107::unserialize($row['content_pref']);
+        $content_pref = $eArrayStorage->ReadArray($row['content_pref']);
 				if( (isset($content_pref["content_manager_approve"]) && ($content_pref["content_manager_approve"] != e_UC_PUBLIC) && check_class($content_pref["content_manager_approve"]))
 				|| (isset($content_pref["content_manager_personal"]) && ($content_pref["content_manager_personal"] != e_UC_PUBLIC) && check_class($content_pref["content_manager_personal"]))
 				|| (isset($content_pref["content_manager_category"]) && ($content_pref["content_manager_category"] != e_UC_PUBLIC) && check_class($content_pref["content_manager_category"])) )
@@ -2521,7 +2526,7 @@ class contentform
 
 
 			$text .= "
-			<div id='catcreation' style='display:none; text-align:left'>
+			<div id='catcreation' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_02'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_21;
@@ -2547,7 +2552,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='submission' style='display:none; text-align:left'>
+			<div id='submission' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_manage_content_04'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_4;
@@ -2632,7 +2637,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='paththeme' style='display:none; text-align:left'>
+			<div id='paththeme' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_03'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_5;
@@ -2739,7 +2744,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='general' style='display:none; text-align:left'>
+			<div id='general' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_04'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_6;
@@ -2935,7 +2940,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='recentpages' style='display:none; text-alignleft'>
+			<div id='recentpages' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_05'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_9;
@@ -3046,7 +3051,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='catpages' style='display:none; text-align:left'>
+			<div id='catpages' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_06'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_10;
@@ -3249,7 +3254,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='contentpages' style='display:none; text-align:left'>
+			<div id='contentpages' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_07'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_11;
@@ -3350,7 +3355,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='authorpage' style='display:none; text-align:left'>
+			<div id='authorpage' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_08'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_12;
@@ -3403,7 +3408,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='archivepage' style='display:none; text-align:left'>
+			<div id='archivepage' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_manage_content_05'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_13;
@@ -3466,7 +3471,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='toppage' style='display:none; text-align:left'>
+			<div id='toppage' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_09'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_14;
@@ -3512,7 +3517,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='scorepage' style='display:none; text-align:left'>
+			<div id='scorepage' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_manage_content_06'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_15;
@@ -3558,7 +3563,7 @@ class contentform
 			$text .= $TOPIC_TABLE_END;
 
 			$text .= "
-			<div id='menu' style='display:none; text-align:left'>
+			<div id='menu' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_manage_content_07'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_8;

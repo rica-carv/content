@@ -35,7 +35,7 @@ require_once(e_HANDLER."form_handler.php");
 $rs = new form;
 require_once($plugindir."handlers/content_class.php");
 $aa = new content;
-
+$eArrayStorage = e107::getArrayStorage();
 include_lan($plugindir."languages/".e_LANGUAGE."/lan_content.php");
 
 if(e_QUERY)
@@ -314,7 +314,8 @@ function show_content(){
 			{
 				if(!is_object($sql2)){ $sql2 = new db; }
 
-				$content_pref = e107::unserialize($row['content_pref']);
+				//$content_pref = e107::unserialize($row['content_pref']);
+        $content_pref = $eArrayStorage->ReadArray($row['content_pref']);
 				$content_pref["content_cat_icon_path_large"] = ($content_pref["content_cat_icon_path_large"] ? $content_pref["content_cat_icon_path_large"] : "{e_PLUGIN}content/images/cat/48/" );
 				$content_pref["content_cat_icon_path_small"] = ($content_pref["content_cat_icon_path_small"] ? $content_pref["content_cat_icon_path_small"] : "{e_PLUGIN}content/images/cat/16/" );
 				$content_cat_icon_path_large	= $tp->replaceConstants($content_pref["content_cat_icon_path_large"]);
@@ -334,8 +335,9 @@ function show_content(){
 			if(!is_object($sql3)){ $sql3 = new db; }
 			if($sql3 -> db_Select($plugintable, "content_id, content_pref", "content_parent = '0' ".$datequery." ORDER BY content_parent")){
 				while($row = $sql3 -> db_Fetch()){
-					if(isset($row['content_pref']) && $row['content_pref']){
-						$content_pref = e107::unserialize($row['content_pref']);
+					if(isset($row['content_pref']) && $row['content_pref']){  
+						//$content_pref = e107::unserialize($row['content_pref']);
+            $content_pref = $eArrayStorage->ReadArray($row['content_pref']);
 					}
 					if($content_pref["content_submit"] && check_class($content_pref["content_submit_class"])){
 						$submit = TRUE;
@@ -1092,7 +1094,7 @@ function show_content_top(){
 // ##### TOP SCORE LIST -----------------------------------
 function show_content_score(){
 		global $qs, $plugindir, $content_shortcodes, $ns, $plugintable, $sql, $aa, $e107cache, $tp, $pref, $cobj, $content_icon_path;
-		global $from, $datequery, $content_pref, $mainparent, $CONTENT_SCORE_TABLE_SCORE, $CONTENT_SCORE_TABLE_AUTHOR, $authordetails, $row, $thisratearray;
+		global $from, $datequery, $content_pref, $mainparent, $eArrayStorage, $CONTENT_SCORE_TABLE_SCORE, $CONTENT_SCORE_TABLE_AUTHOR, $authordetails, $row, $thisratearray;
 
 		$mainparent		= $aa -> getMainParent(intval($qs[1]));
 		$content_pref	= $aa -> getContentPref($mainparent);
@@ -1146,7 +1148,7 @@ function show_content_score(){
 // ##### CONTENT ITEM ------------------------------------------
 function show_content_item()
 {
-		global $pref, $content_pref, $content_icon_path, $content_image_path, $content_file_path, $custom, $plugindir, $plugintable, $array, $content_shortcodes, $datequery, $order, $nextprevquery, $from, $number, $row, $qs, $gen, $sql, $aa, $tp, $rs, $cobj, $e107, $e107cache, $ns, $rater, $ep, $row, $authordetails, $mainparent; 
+		global $pref, $content_pref, $content_icon_path, $content_image_path, $content_file_path, $custom, $plugindir, $plugintable, $array, $content_shortcodes, $datequery, $order, $nextprevquery, $from, $number, $row, $qs, $gen, $sql, $aa, $tp, $rs, $cobj, $e107, $e107cache, $eArrayStorage, $ns, $rater, $ep, $row, $authordetails, $mainparent; 
 		global $CONTENT_CONTENT_TABLE_TEXT, $CONTENT_CONTENT_TABLE_PAGENAMES, $CONTENT_CONTENT_TABLE_SUMMARY, $CONTENT_CONTENT_TABLE_CUSTOM_TAGS, $CONTENT_CONTENT_TABLE_PARENT, $CONTENT_CONTENT_TABLE_INFO_PRE, $CONTENT_CONTENT_TABLE_INFO_POST, $CONTENT_CONTENT_TABLE_AUTHORDETAILS, $CONTENT_CONTENT_TABLE_INFO_PRE_HEADDATA, $CONTENT_CONTENT_TABLE_INFO_POST_HEADDATA;
 		global $CONTENT_CONTENT_TABLE_PREV_PAGE, $CONTENT_CONTENT_TABLE_NEXT_PAGE;
 

@@ -115,7 +115,7 @@ class contentdb
 	{
 		//$mode		: create or update
 		//$type		: none(=admin), submit, contentmanager
-		global $pref, $qs, $sql, $ns, $rs, $aa, $tp, $plugintable, $e107cache,  $e_event;
+		global $pref, $qs, $sql, $ns, $rs, $aa, $tp, $plugintable, $e107cache, $eArrayStorage, $e_event;
 
 		$_POST['content_heading']		= $tp -> toDB(trim($_POST['content_heading']));
 		$_POST['content_subheading']	= $tp -> toDB($_POST['content_subheading']);
@@ -318,7 +318,8 @@ class contentdb
 				$custom['content_custom_presettags'] = $tp->toDB($_POST['content_custom_preset_key']);
 			}
 			if($custom){
-				$contentprefvalue = e107::serialize($custom);
+				//$contentprefvalue = e107::serialize($custom);
+        $contentprefvalue = $eArrayStorage->WriteArray($custom);
 			}else{
 				$contentprefvalue = "";
 			}
@@ -516,7 +517,7 @@ class contentdb
 
 
 		function dbAssignAdmins($mode, $id, $value){
-			global $plugintable, $qs, $sql;
+			global $plugintable, $qs, $sql, $eArrayStorage;
 
 			if($mode == "admin"){
 				$id = intval($id);
@@ -524,8 +525,8 @@ class contentdb
 				$row = $sql -> db_Fetch();
 
 				//get current preferences
-				$content_pref = e107::serialize($row['content_pref']);
-
+				//$content_pref = e107::unserialize($row['content_pref']);
+        $content_pref = $eArrayStorage->ReadArray($row['content_pref']);
 				//assign new preferences
 				if($value == "clear"){
 					$content_pref["content_manager_allowed"] = "";
@@ -534,7 +535,8 @@ class contentdb
 				}
 				
 				//create new array of preferences
-				$tmp = e107::serialize($content_pref);
+				//$tmp = e107::serialize($content_pref);
+        $tmp = $eArrayStorage->WriteArray($content_pref);
 
 				$sql -> db_Update($plugintable, "content_pref = '{$tmp}' WHERE content_id = '".intval($id)."' ");
 

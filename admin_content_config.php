@@ -46,7 +46,7 @@ require_once($plugindir."handlers/content_form_class.php");
 $aform = new contentform;
 require_once(e_HANDLER."file_class.php");
 $fl = new e_file;
-
+$eArrayStorage = e107::getArrayStorage();
 global $tp;
 $deltest = array_flip($_POST);
 
@@ -131,7 +131,8 @@ if(isset($_POST['updateinherit'])){
 		//get current
 		$sql -> db_Select($plugintable, "content_pref", "content_id='".intval($k)."' ");
 		$row = $sql -> db_Fetch();
-		$content_pref = e107::unserialize($row['content_pref']);
+		//$content_pref = e107::unserialize($row['content_pref']);
+    $content_pref = $eArrayStorage->ReadArray($row['content_pref']);
 		//assign or remove inherit option
 		if(isset($_POST['content_inherit']) && isset($_POST['content_inherit'][$k]) ){
 			$content_pref['content_inherit'] = "1";
@@ -139,7 +140,8 @@ if(isset($_POST['updateinherit'])){
 			unset($content_pref['content_inherit']);
 		}
 		//update
-		$tmp = e107::serialize($content_pref);
+		//$tmp = e107::serialize($content_pref);
+    $tmp = $eArrayStorage->WriteArray($content_pref);
 		$sql2 -> db_Update($plugintable, "content_pref='{$tmp}' WHERE content_id='".intval($k)."' ");
 	}
 	$message		= CONTENT_ADMIN_CAT_LAN_22."<br /><br />";
@@ -486,7 +488,8 @@ function admin_content_config_adminmenu()
 
 				show_admin_menu(CONTENT_ADMIN_MENU_LAN_6, $act,$var);
 
-				if(isset($qs[0]) && $qs[0] == "option" && isset($qs[1])){
+				//if(isset($qs[0]) && $qs[0] == "option" && isset($qs[1])){
+        if(FALSE){
 					unset($var);
 					$var=array();
 					$var['creation']['text']		= CONTENT_ADMIN_MENU_LAN_7;

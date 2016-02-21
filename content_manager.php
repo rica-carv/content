@@ -30,7 +30,7 @@ global $tp;
 require_once(e_HANDLER."userclass_class.php");
 require_once(e_HANDLER."form_handler.php");
 $rs = new form;
-
+$eArrayStorage = e107::getArrayStorage();
 require_once(e_HANDLER."file_class.php");
 $fl = new e_file;
 
