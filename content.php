@@ -288,7 +288,7 @@ function CachePost($cachestring=''){
 
 // ##### CONTENT TYPE LIST ------------------------------
 function show_content(){
-		global $qs, $content_shortcodes, $ns, $plugintable, $sql, $aa, $e107cache, $tp, $pref, $content_pref, $content_cat_icon_path_large, $content_cat_icon_path_small, $datequery, $content_icon_path, $contenttotal, $row;
+		global $qs, $content_shortcodes, $ns, $plugintable, $sql, $aa, $e107cache, $tp, $pref, $content_pref, $content_cat_icon_path_large, $content_cat_icon_path_small, $datequery, $content_icon_path, $contenttotal, $row, $eArrayStorage;
 
 		if(is_readable(e_THEME.$pref['sitetheme']."/content/content_type_template.php")){
 			require_once(e_THEME.$pref['sitetheme']."/content/content_type_template.php");
