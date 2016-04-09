@@ -17,13 +17,11 @@
 */
 
 if (!defined('e107_INIT')) { exit; }
-$pref = e107::getPref(); 
-if (!isset($pref['plug_installed']['content']))
-{
-	header('location:'.e_BASE.'index.php');
-	exit;
-}
 
+if (!e107::isInstalled('content'))
+{
+	e107::redirect();
+}
 
 global $plugindir, $plugintable, $datequery;
 $plugindir		= e_PLUGIN."content/";

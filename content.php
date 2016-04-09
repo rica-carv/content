@@ -17,10 +17,9 @@
 */
 
 require_once('../../class2.php');
-if (!isset($pref['plug_installed']['content']))
+if (!e107::isInstalled('content'))
 {
-	header('location:'.e_BASE.'index.php');
-	exit;
+	e107::redirect();
 }
 
 $plugindir = e_PLUGIN."content/";
