@@ -2393,7 +2393,7 @@ class contentform
 					</div>
 				</td>
 			</tr>";
-
+ /*
 			$text = "
 			<script type=\"text/javascript\">
 			<!--
@@ -2415,14 +2415,14 @@ class contentform
 			}
 			//-->
 			</script>";
-
+*/
 			$text .= "
 			<div style='text-align:center'>
-			<form method='post' name='optform' action='".e_SELF."?".e_QUERY."'>\n
-
-			<div id='creation' style='text-align:left'>
+			<form method='post' name='optform' action='".e_SELF."?".e_QUERY."'>\n";
+      $text_start= $text;
+			$text ="<div id='creation' style='text-align:left'>
 			 <table class='table adminform' id='show_options_cat_01'>	";
-
+      
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_3;
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_TITLE_ROW);
 
@@ -2524,8 +2524,8 @@ class contentform
 
 			$text .= $TOPIC_TABLE_END;
 
-
-			$text .= "
+      $text_creation = $text;
+			$text = "
 			<div id='catcreation' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_02'>";
 
@@ -2550,10 +2550,11 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
+      $text_catcreation = $text;
 
-			$text .= "
+			$text = "
 			<div id='submission' style='/*display:none;*/ text-align:left'>
-			<table class='table adminform' id='show_manage_content_04'>";
+			<table class='table adminform' id='show_options_cat_02a'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_4;
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_TITLE_ROW);
@@ -2635,8 +2636,8 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_submission = $text;
+			$text = "
 			<div id='paththeme' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_03'>";
 
@@ -2742,8 +2743,8 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_paththeme = $text;
+			$text = "
 			<div id='general' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_04'>";
 
@@ -2938,8 +2939,8 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_general = $text;
+			$text = "
 			<div id='recentpages' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_05'>";
 
@@ -3049,8 +3050,8 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_recentpages = $text;
+			$text = "
 			<div id='catpages' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_06'>";
 
@@ -3252,8 +3253,8 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_catpages = $text;
+			$text = "
 			<div id='contentpages' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_07'>";
 
@@ -3353,8 +3354,8 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_contentpages = $text;
+			$text = "
 			<div id='authorpage' style='/*display:none;*/ text-align:left'>
 			<table class='table adminform' id='show_options_cat_08'>";
 
@@ -3406,10 +3407,10 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_authorpage = $text;
+			$text = "
 			<div id='archivepage' style='/*display:none;*/ text-align:left'>
-			<table class='table adminform' id='show_manage_content_05'>";
+			<table class='table adminform' id='show_options_cat_09'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_13;
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_TITLE_ROW);
@@ -3469,10 +3470,10 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_archivepage = $text;
+			$text = "
 			<div id='toppage' style='/*display:none;*/ text-align:left'>
-			<table class='table adminform' id='show_options_cat_09'>";
+			<table class='table adminform' id='show_options_cat_10'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_14;
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_TITLE_ROW);
@@ -3515,10 +3516,10 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_toppage = $text;
+			$text = "
 			<div id='scorepage' style='/*display:none;*/ text-align:left'>
-			<table class='table adminform' id='show_manage_content_06'>";
+			<table class='table adminform' id='show_options_cat_11'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_15;
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_TITLE_ROW);
@@ -3561,10 +3562,10 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
-			$text .= "
+      $text_scorepage = $text;
+			$text = "
 			<div id='menu' style='/*display:none;*/ text-align:left'>
-			<table class='table adminform' id='show_manage_content_07'>";
+			<table class='table adminform' id='show_options_cat_12'>";
 
 			$TOPIC_CAPTION = CONTENT_ADMIN_OPT_LAN_MENU_8;
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_TITLE_ROW);
@@ -3840,7 +3841,7 @@ class contentform
 			$text .= preg_replace("/\{(.*?)\}/e", '$\1', $TOPIC_ROW_NOEXPAND);
 
 			$text .= $TOPIC_TABLE_END;
-
+      $text_menu = $text;
 			if($qs[1] != "default"){
 				$text .= "<input type='hidden' name='content_inherit' value='".$content_pref['content_inherit']."' />";
 			}
@@ -3848,7 +3849,24 @@ class contentform
 			</form>
 			</div>";
 			//echo "<pre>"; print_r($content_pref); echo "</pre>";
-
+      
+			$tabs = array();
+			$tabs[0]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_7, 'text'=>$text_creation);
+			$tabs[1]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_23, 'text'=>$text_catcreation);
+			$tabs[2]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_8, 'text'=>$text_submission);
+			$tabs[3]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_9, 'text'=>$text_paththeme);
+			$tabs[4]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_10, 'text'=>$text_general);
+			$tabs[5]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_14, 'text'=>$text_menu);   
+			$tabs[6]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_11, 'text'=>$text_recentpages);
+			$tabs[7]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_12, 'text'=>$text_catpages);
+			$tabs[8]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_13, 'text'=>$text_contentpages);
+			$tabs[9]  = array('caption'=>CONTENT_ADMIN_MENU_LAN_18, 'text'=>$text_authorpage);
+			$tabs[10] = array('caption'=>CONTENT_ADMIN_MENU_LAN_16, 'text'=>$text_archivepage);
+			$tabs[11] = array('caption'=>CONTENT_ADMIN_MENU_LAN_20, 'text'=>$text_toppage);
+			$tabs[12] = array('caption'=>CONTENT_ADMIN_MENU_LAN_22, 'text'=>$text_scorepage);
+        
+      $text = e107::getForm()->tabs($tabs);  
+      $text = $textstart.$text.$textend;
 			$ns -> tablerender($caption, $text);
 		}
 

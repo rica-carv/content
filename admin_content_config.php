@@ -492,12 +492,12 @@ function admin_content_config_adminmenu()
         if(FALSE){
 					unset($var);
 					$var=array();
-					$var['creation']['text']		= CONTENT_ADMIN_MENU_LAN_7;
-					$var['catcreation']['text']		= CONTENT_ADMIN_MENU_LAN_23;
-					$var['submission']['text']		= CONTENT_ADMIN_MENU_LAN_8;
-					$var['paththeme']['text']		= CONTENT_ADMIN_MENU_LAN_9;
-					$var['general']['text']			= CONTENT_ADMIN_MENU_LAN_10;
-					$var['menu']['text']			= CONTENT_ADMIN_MENU_LAN_14;
+					$var['creation']['text']		= CONTENT_ADMIN_MENU_LAN_7;     //$text_creation
+					$var['catcreation']['text']		= CONTENT_ADMIN_MENU_LAN_23;  //$text_catcreation
+					$var['submission']['text']		= CONTENT_ADMIN_MENU_LAN_8;   //$text_submission
+					$var['paththeme']['text']		= CONTENT_ADMIN_MENU_LAN_9;     //$text_paththeme
+					$var['general']['text']			= CONTENT_ADMIN_MENU_LAN_10;    //$text_general
+					$var['menu']['text']			= CONTENT_ADMIN_MENU_LAN_14;      //$text_menu
 
 					$sql = new db;
 					$category_total			= $sql -> db_Select($plugintable, "content_heading", "content_id='".$qs[1]."' ");
@@ -507,13 +507,13 @@ function admin_content_config_adminmenu()
 
 					unset($var);
 					$var=array();
-					$var['recentpages']['text']		= CONTENT_ADMIN_MENU_LAN_11;
-					$var['catpages']['text']		= CONTENT_ADMIN_MENU_LAN_12;
-					$var['contentpages']['text']	= CONTENT_ADMIN_MENU_LAN_13;
-					$var['authorpage']['text']		= CONTENT_ADMIN_MENU_LAN_18;
-					$var['archivepage']['text']		= CONTENT_ADMIN_MENU_LAN_16;
-					$var['toppage']['text']			= CONTENT_ADMIN_MENU_LAN_20;
-					$var['scorepage']['text']		= CONTENT_ADMIN_MENU_LAN_22;
+					$var['recentpages']['text']		= CONTENT_ADMIN_MENU_LAN_11;  //$text_recentpages
+					$var['catpages']['text']		= CONTENT_ADMIN_MENU_LAN_12;    //$text_catpages
+					$var['contentpages']['text']	= CONTENT_ADMIN_MENU_LAN_13;  //$text_contentpages
+					$var['authorpage']['text']		= CONTENT_ADMIN_MENU_LAN_18;  //$text_authorpage
+					$var['archivepage']['text']		= CONTENT_ADMIN_MENU_LAN_16;  //$text_archivepage
+					$var['toppage']['text']			= CONTENT_ADMIN_MENU_LAN_20;    //$text_toppage
+					$var['scorepage']['text']		= CONTENT_ADMIN_MENU_LAN_22;    //$text_scorepage
 					show_admin_menu(CONTENT_ADMIN_MENU_LAN_21.": ".$content_heading."", $act, $var, TRUE);
 				
 				}else{
